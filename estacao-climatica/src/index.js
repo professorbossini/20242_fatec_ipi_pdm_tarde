@@ -31,7 +31,7 @@ class App extends React.Component {
       return estouNoSul ? 'Inverno' : 'Verão'
     if (data >= d2 && data < d3)
       return estouNoSul ? 'Primavera' : 'Outono'
-    if (data >= d3 || data < d1)
+    if (data >= d3 || data < d4)
       return estouNoSul ? 'Verão' : 'Inverno'
     return estouNoSul ? 'Outono' : 'Primavera'
 
