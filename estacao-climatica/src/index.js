@@ -2,21 +2,46 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import React from 'react'
 import ReactDOM from 'react-dom'
-
+import EstacaoClimatica from './EstacaoClimatica'
 
 class App extends React.Component {
 
-  constructor(props){
-    super(props)
-    this.state = {
-      latitude: null,
-      longitude: null,
-      estacao: null,
-      data: null,
-      icone: null,
-      mensagemDeErro: null
-    }
+  // constructor(props){
+  //   super(props)
+  //   console.log('constructor')
+  //   this.state = {
+  //     latitude: null,
+  //     longitude: null,
+  //     estacao: null,
+  //     data: null,
+  //     icone: null,
+  //     mensagemDeErro: null
+  //   }
+  // }
+
+  state = {
+    latitude: null,
+    longitude: null,
+    estacao: null,
+    data: null,
+    icone: null,
+    mensagemDeErro: null
   }
+
+  componentDidMount(){
+    console.log('componentDidMount')
+    this.obterLocalizacao()
+  }
+
+  componentDidUpdate(){
+    console.log('componentDidUpdate')
+  }
+
+  componentWillUnmount(){
+    console.log('componentWillUnmount')
+  }
+
+
 
   obterEstacao = (data, latitude) => {
     const anoAtual = data.getFullYear()
@@ -73,37 +98,28 @@ class App extends React.Component {
   }
 
   render(){
+    console.log('render')
     return (
       <div className='container p-4 border mt-2'>
         <div className='row justify-content-center'>
           <div className='col-sm-12 col-md-8'>
-              <div className='card'>
-                <div className='card-body'>
-                  <div
-                    className='d-flex align-items-center' 
-                    style={{height: '6rem'}}>
-                      <i className={`fa-5x ${this.state.icone}`}></i>
-                      <p className='w-75 ms-3 text-center fs-1'>{this.state.estacao}</p>
-                  </div>
-                  <p className='text-center'>
-                    {
-                      this.state.latitude ?
-                        `Coordenadas: ${this.state.latitude}, ${this.state.longitude}. Data: ${this.state.data}`
-                      :
-                      this.state.mensagemDeErro ? 
-                        this.state.mensagemDeErro
-                      :
-                        'Clique no botão para saber a sua estação climática'
+            {
+              this.state.mensagemDeErro ?
 
-                    }
-                  </p>
-                  <button
-                    onClick={this.obterLocalizacao}
-                    className='btn btn-outline-primary w-100 mt-2'>
-                    Qual a minha estação?
-                  </button>  
-                </div>
-            </div>
+                <p className='border rounded p-2 fs-1-text-center'>
+                  É preciso dar permissão de acesso à localização.
+                </p>
+              :
+                <EstacaoClimatica 
+                  icone={this.state.icone}
+                  estacao={this.state.estacao}
+                  latitude={this.state.latitude}
+                  longitude={this.state.longitude}
+                  data={this.state.data}
+                  mensagemDeErro={this.state.mensagemDeErro}
+                  obterLocalizacao={this.obterLocalizacao}
+                />
+            }
           </div>
         </div>
       </div>
