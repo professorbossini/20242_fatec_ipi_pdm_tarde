@@ -3,6 +3,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import EstacaoClimatica from './EstacaoClimatica'
+import Loading from './Loading'
 
 class App extends React.Component {
 
@@ -104,11 +105,14 @@ class App extends React.Component {
         <div className='row justify-content-center'>
           <div className='col-sm-12 col-md-8'>
             {
-              this.state.mensagemDeErro ?
+              (!this.state.latitude && !this.state.mensagemDeErro) ?
+                <Loading mensagem="Por favor, libere o acesso à localização"/> 
+              : 
+                this.state.mensagemDeErro ?
 
-                <p className='border rounded p-2 fs-1-text-center'>
-                  É preciso dar permissão de acesso à localização.
-                </p>
+                  <p className='border rounded p-2 fs-1-text-center'>
+                    É preciso dar permissão de acesso à localização.
+                  </p>
               :
                 <EstacaoClimatica 
                   icone={this.state.icone}
